@@ -67,6 +67,7 @@ Frontend should now be running on:
 ## 🔑 Environment Variables
 `.env` (Backend)
 
+```
 SECRET_KEY=your_django_secret_key
 DEBUG=True
 DATABASE_NAME=your_db_name
@@ -74,6 +75,7 @@ DATABASE_USER=your_db_user
 DATABASE_PASSWORD=your_db_password
 DATABASE_HOST=localhost
 DATABASE_PORT=5432
+```
 
 `.env` (Frontend)
 
