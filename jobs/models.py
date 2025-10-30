@@ -13,6 +13,7 @@ class Job(models.Model):
     title = models.CharField(max_length=255)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="applied")
     notes = models.TextField(blank=True, null=True)
+    resume = models.FileField(upload_to="resume/", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

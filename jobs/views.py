@@ -1,10 +1,12 @@
 from rest_framework import viewsets, permissions
 from .models import Job
 from .serializers import JobSerializer
+from rest_framework.parsers import MultiPartParser, FormParser
 
 class JobViewSet(viewsets.ModelViewSet):
     serializer_class = JobSerializer
     permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
 
     def get_queryset(self):
         return Job.objects.filter(user=self.request.user)

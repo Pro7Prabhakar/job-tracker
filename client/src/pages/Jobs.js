@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import api from "../utils/axios";
+import api, { FILES_BASE_URL } from "../utils/axios";
 import { useNavigate } from "react-router-dom";
+import AddJobForm from "../components/AddJobForm";
 
 function Jobs() {
   const [jobs, setJobs] = useState([]);
@@ -82,6 +83,7 @@ function Jobs() {
       title: job.title,
       status: job.status,
       notes: job.notes || "",
+      resume: job.resume,
     });
     setEditingId(job.id);
   };
@@ -106,7 +108,7 @@ function Jobs() {
       <h2>Job Tracker</h2>
 
       {/* Form */}
-      <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
+      {/* <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
         <input
           name="company"
           placeholder="Company"
@@ -144,7 +146,18 @@ function Jobs() {
             Cancel
           </button>
         )}
-      </form>
+      </form> */}
+
+      <AddJobForm 
+        editingJob={editingId ? jobs.find(j => j.id === editingId) : null}
+        onJobAdded={(newJob) => setJobs([...jobs, newJob])} 
+        onJobUpdated={(updatedJob) => {
+          if (updatedJob) {
+            setJobs(jobs.map(job => job.id === updatedJob.id ? updatedJob : job));
+          }
+          setEditingId(null);
+        }} 
+      />
 
       {/* Filtered Search */}
       <div style={{ marginBottom: "10px" }}>
@@ -175,6 +188,7 @@ function Jobs() {
               <th>Title</th>
               <th>Status</th>
               <th>Notes</th>
+              <th>Resume</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -187,6 +201,20 @@ function Jobs() {
                   <td>{job.status}</td>
                   <td>{job.notes}</td>
                   <td>
+                    {job.resume ? (
+                      <a
+                        href={`${FILES_BASE_URL}${job.resume}`} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-blue-600 underline" 
+                      >
+                        View Resume
+                      </a>
+                    ) : (
+                      "No Resume"
+                    )}
+                  </td>
+                  <td>
                     <button onClick={() => handleEdit(job)}>Edit</button>
                     <button onClick={() => handleDelete(job.id)}>Delete</button>
                   </td>
@@ -194,7 +222,7 @@ function Jobs() {
               ))
             ) : (
               <tr>
-                <td colSpan="5" style={{ textAlign: "center" }}>
+                <td colSpan="6" style={{ textAlign: "center" }}>
                   No jobs found.
                 </td>
               </tr>

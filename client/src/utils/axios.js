@@ -28,4 +28,6 @@ api.interceptors.response.use(
   }
 );
 
+export const FILES_BASE_URL = api.defaults.baseURL.replace(/\/api\/?$/i, "");
+
 export default api;
