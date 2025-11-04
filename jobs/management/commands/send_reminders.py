@@ -25,6 +25,6 @@ class Command(BaseCommand):
             )
 
             send_mail(subject, message, None, [job.user.email])
-            self.stdout.write(self.style.SUCCESS(f"Reminder sent to {job.user.email}"))
+            # self.stdout.write(self.style.SUCCESS(f"Reminder sent to {job.user.email}"))
 
         self.stdout.write(self.style.SUCCESS("✅ All reminder emails sent successfully!"))

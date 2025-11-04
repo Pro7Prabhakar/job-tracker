@@ -1,3 +1,4 @@
+import io
 from rest_framework import viewsets, permissions
 from .models import Job
 from .serializers import JobSerializer
@@ -19,13 +20,14 @@ class JobViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 @api_view(["GET"])
-@permission_classes([permissions.IsAdminUser])
+@permission_classes([permissions.AllowAny])
 def run_reminder_job(request):
     valid_key = request.GET.get("key") == config("REMINDER_KEY")
     is_admin = request.user and request.user.is_staff
 
     if not (valid_key or is_admin):
         return Response({"error": "Unauthorized"}, status=403)
-
-    call_command("send_reminders")
+    
+    out = io.StringIO()
+    call_command("send_reminders", stdout=out)
     return Response({"message": "Reminder job executed successfully!"})
