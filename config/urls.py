@@ -37,5 +37,3 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-https://job-tracker-64dm.onrender.com/debug-urls/
