@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.fontFamily-audiowide {
+  font-family: 'Audiowide', sans-serif;
+}
